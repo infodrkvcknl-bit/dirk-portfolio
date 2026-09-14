@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dirk | Senior Brand Builder</title>
+    
+    <!-- Social Media Previews -->
+    <meta property="og:title" content="Dirk - Senior Brand Builder">
+    <meta property="og:description" content="Internationale precisie en creatieve ziel.">
+    <meta property="og:image" content="https://jouwdomein.nl/images/social.jpg">
+    
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alpine: '#1A2E28', sand: '#F5F2EA', clay: '#B85C38', stone: '#4A4A4A' },
+                    fontFamily: { sans: ['Manrope', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-sand text-stone font-sans">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-sand/95 backdrop-blur-sm border-b border-alpine/10 px-6 py-5 flex justify-between items-center">
+        <a href="#" class="font-serif text-2xl font-bold text-alpine">DIRK.</a>
+        <div class="flex gap-6 text-sm font-semibold uppercase">
+            <a href="#work">Werk</a>
+            <a href="#contact">Contact</a>
+            <button onclick="setLang('nl')" class="text-clay">NL</button>
+            <button onclick="setLang('en')">EN</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="h-screen flex items-center justify-center text-center px-6">
+        <div>
+            <h1 class="font-serif text-6xl md:text-8xl text-alpine mb-6">Internationale precisie.<br><span class="italic text-clay">Creatieve ziel.</span></h1>
+            <a href="#contact" class="inline-block bg-alpine text-sand px-10 py-4 rounded-full mt-8 hover:bg-clay transition-colors">Start een gesprek</a>
+        </div>
+    </header>
+
+    <!-- Dynamic Portfolio Section -->
+    <section id="work" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-serif text-5xl text-alpine mb-12">Geselecteerd Werk</h2>
+            <!-- Hier laadt JavaScript de projecten uit het CMS -->
+            <div id="portfolio-grid" class="grid md:grid-cols-2 gap-12">
+                <p>Laden...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 px-6 bg-alpine text-sand text-center">
+        <h2 class="font-serif text-4xl mb-8">Laten we iets moois bouwen.</h2>
+        <form action="https://formspree.io/f/jouw-code" method="POST" class="max-w-md mx-auto space-y-4">
+            <input type="email" name="email" placeholder="Je e-mail" class="w-full p-4 rounded-sm text-stone" required>
+            <textarea name="message" rows="4" placeholder="Bericht" class="w-full p-4 rounded-sm text-stone" required></textarea>
+            <button class="w-full bg-clay text-white font-bold py-4 rounded-sm">Verstuur</button>
+        </form>
+    </section>
+
+    <!-- Logic to fetch from Decap CMS / Git Data -->
+    <script>
+        // Simpele taalwissel
+        function setLang(l) { document.documentElement.lang = l; }
+
+        // Fetch logic voor Decap CMS (Git based)
+        // In een echte setup zou je hier een API call doen naar je _data folder
+        async function loadProjects() {
+            // Voor nu gebruiken we een lokale JSON simulatie die door Decap wordt gegenereerd
+            // In productie: fetch('/admin/config.yml') of een custom build script
+            const projects = [
+                {
+                    title: "Autotron Libema",
+                    image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&q=80&w=800",
+                    desc_nl: "Passie vertalen naar digitale consistentie."
+                },
+                {
+                    title: "Swiss Tech Strategy",
+                    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+                    desc_nl: "Complexiteit vereenvoudigen met precisie."
+                }
+            ];
+
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = projects.map(p => `
+                <div class="group">
+                    <div class="aspect-video bg-gray-200 mb-4 overflow-hidden">
+                        <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-serif text-2xl text-alpine">${p.title}</h3>
+                    <p class="text-stone/70">${p.desc_nl}</p>
+                </div>
+            `).join('');
+        }
+        loadProjects();
+    </script>
+</body>
+</html>
